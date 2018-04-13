@@ -10,6 +10,9 @@ namespace aplimat_final_exam.Models
     public class CubeMesh : Movable
     {
         public Vector3 Scale = new Vector3(0.5f, 0.5f, 0.5f);
+        public float colorR = 1;
+        public float colorG = 1;
+        public float colorB = 1;
 
         public CubeMesh()
         {
