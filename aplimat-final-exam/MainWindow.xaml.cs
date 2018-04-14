@@ -78,6 +78,7 @@ namespace aplimat_final_exam
         private CubeMesh myCube = new CubeMesh();
 
         int cnt = 0;
+        int rockMaxCnt = 150;
         private Randomizer fireSpeed = new Randomizer(0, 5);
         private Randomizer colorOn = new Randomizer(0, 1);
         private Randomizer massRand = new Randomizer(2, 5);
@@ -196,7 +197,7 @@ namespace aplimat_final_exam
             }
             
             //if rocks >= 100, removes first in rocks
-            if (rocks1.Count >= 100)
+            if (rocks1.Count >= rockMaxCnt)
             {
                 rocks1.RemoveAt(0);
             }
@@ -267,12 +268,9 @@ namespace aplimat_final_exam
             #endregion
         }
         
-
-
         private void physicsSimulation(CubeMesh cube)
         {
             cube.ApplyGravity();
-            //(float)Gaussian.Generate(0, 50)
             Vector3 fire = new Vector3((float)fireSpeed.GenerateDouble(), (float)fireSpeed.GenerateDouble(), 0);
             Vector3 fire2 = new Vector3((float)fireSpeed.GenerateDouble() * -1 , (float)fireSpeed.GenerateDouble() * -1, 0);
 
@@ -302,23 +300,27 @@ namespace aplimat_final_exam
 
             if (!lake.Contains(cube))
             {
-                //cube.ApplyForce(fire);
-                //cube.ApplyGravity();
-                if (cube.Position.y <= landBoxT)
+                if (cube.Position.x >= -81 && cube.Position.x <= 81)
                 {
-                    if (cube.Position.x <= lakeBoxL)
+                    if (cube.Position.y <= landBoxT)
                     {
-                        cube.ApplyForce(fire);
-                        cube.Position.y = landBoxT;
-                        cube.Velocity.y *= -1;
-                        cube.Velocity.x *= -1;
-                    }
-                    if (cube.Position.x >= lakeBoxR)
-                    {
-                        cube.ApplyForce(fire2);
-                        cube.Position.y = landBoxT;
-                        cube.Velocity.y *= -1;
-                        cube.Velocity.x *= -1;
+                        if (cube.Position.x <= lakeBoxL)
+                        {
+                            if (cube.Position.x == -75)
+                            {
+                                cube.ApplyForce(fire);
+                            }
+                            cube.Position.y = landBoxT;
+                            cube.Velocity.y *= -1;
+                            //cube.Velocity.x *= -1;
+                        }
+                        if (cube.Position.x >= lakeBoxR)
+                        {
+                            cube.ApplyForce(fire2);
+                            cube.Position.y = landBoxT;
+                            cube.Velocity.y *= -1;
+                            //cube.Velocity.x *= -1;
+                        }
                     }
                 }
 
